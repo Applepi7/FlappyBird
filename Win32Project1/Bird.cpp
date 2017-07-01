@@ -4,9 +4,12 @@
 #include "ZeroInputManager.h"
 
 
-Bird::Bird() : moveY(0), jumpPower(400), floorY(0), gravity(400)
+Bird::Bird() : moveY(0), jumpPower(420), floorY(0), gravity(400)
 {
-	bird = new ZeroSprite("Resource/Player/bird.png");
+	bird = new ZeroAnimation(1.f);
+	for (int i = 1; i <= 3; i++) {
+		bird->PushSprite("Resource/Player/Fly_%d.png", i);
+	}
 	PushScene(bird);
 
 	SetPos(100, 200);
@@ -28,6 +31,8 @@ void Bird::Update(float eTime)
 		floorY = 0;
 	} 
 	moveY += gravity * eTime;
+
+	bird->SetRunning(true);
 }
 
 void Bird::Render()

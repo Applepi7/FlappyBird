@@ -1,6 +1,6 @@
 #pragma once
 #include "ZeroIScene.h"
-#include "ZeroSprite.h"
+#include "ZeroAnimation.h"
 
 
 class Bird :
@@ -16,7 +16,7 @@ private:
 
 public:
 
-	ZeroSprite* bird;
+	ZeroAnimation* bird;
 	
 	void Update(float eTime) override;
 	void Render() override;

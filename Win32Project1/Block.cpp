@@ -34,5 +34,5 @@ void Block::Render()
 
 void Block::MoveX(float eTime)
 {
-	AddPosX(-100 * eTime);
+	AddPosX(-110 * eTime);
 }

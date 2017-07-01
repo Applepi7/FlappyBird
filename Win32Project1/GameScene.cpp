@@ -6,16 +6,18 @@
 #include <iostream>
 using namespace std;
 
-GameScene::GameScene() : spawnTimer(0, 3.f)
+GameScene::GameScene() : spawnTimer(0, 2.f)
 {
-	bird = new Bird();
+	b = new Bird();
 	background = new ZeroSprite("Resource/Background/background.png");
-	PushScene(bird);
+	PushScene(b);
 	PushScene(background);
+
+
 }
 
 
-GameScene::~GameScene()
+GameScene::~GameScene()	
 {
 }
 
@@ -23,7 +25,7 @@ void GameScene::Update(float eTime)
 {
 	ZeroIScene::Update(eTime);
 	background->Update(eTime);
-	bird->Update(eTime);
+	b->Update(eTime);
 
 	for (auto block : blockList) {
 		block->Update(eTime);
@@ -39,7 +41,7 @@ void GameScene::Render()
 {
 	ZeroIScene::Render();
 	background->Render();
-	bird->Render();
+	b->Render();
 	for (auto block : blockList) {
 		block->Render();
 	}
@@ -48,16 +50,15 @@ void GameScene::Render()
 void GameScene::IsCollision()
 {
 	for (auto block = blockList.begin(); block != blockList.end();) {
-		if (bird->bird->IsOverlapped((*block)->Uobstacle) || bird->bird->IsOverlapped((*block)->Dobstacle)) {
-			PopScene(bird);
+		if (b->bird->IsOverlapped((*block)->Uobstacle) || b->bird->IsOverlapped((*block)->Dobstacle)) {
+			PopScene(b);
 			block++;
 			if (block == blockList.end()) break;
 		}
-		else {
-			block++;
-			if (block == blockList.end()) break;
-		}
+		block++;
+		if (block == blockList.end()) break;
 	}
+
 }
 
 void GameScene::SpawnBlock(float eTime)

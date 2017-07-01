@@ -18,11 +18,12 @@ public:
 	GameScene();
 	~GameScene();
 
-	Bird* bird;
+	Bird* b;
 	list<Block*> blockList;
 
 	ZeroSprite* background;
 
+	bool isPlay;
 
 	void Update(float eTime) override;
 	void Render() override;

@@ -166,6 +166,7 @@
     <ClInclude Include="Bird.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="GameScene.h" />
+    <ClInclude Include="Global.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TitleScene.h" />
   </ItemGroup>

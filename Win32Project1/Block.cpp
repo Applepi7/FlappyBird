@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Block.h"
 
+#include "Global.h"
 
 Block::Block()
 {
@@ -9,8 +10,6 @@ Block::Block()
 	PushScene(Dobstacle);
 	PushScene(Uobstacle);
 
-	Uobstacle->SetPos(400, -100);
-	Dobstacle->SetPos(400, Uobstacle->Pos().y + 700);
 }
 
 
@@ -35,5 +34,5 @@ void Block::Render()
 
 void Block::MoveX(float eTime)
 {
-	AddPosX(-50 * eTime);
+	AddPosX(-100 * eTime);
 }

@@ -4,7 +4,7 @@
 #include "ZeroInputManager.h"
 
 
-Bird::Bird() : moveY(0), jumpPower(240), floorY(0), gravity(150)
+Bird::Bird() : moveY(0), jumpPower(400), floorY(0), gravity(400)
 {
 	bird = new ZeroSprite("Resource/Player/bird.png");
 	PushScene(bird);

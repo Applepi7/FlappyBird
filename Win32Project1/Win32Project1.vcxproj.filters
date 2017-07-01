@@ -51,5 +51,6 @@
     <ClInclude Include="TitleScene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="Global.h" />
   </ItemGroup>
 </Project>

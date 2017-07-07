@@ -12,6 +12,11 @@ public:
 
 	ZeroSprite* Uobstacle;
 	ZeroSprite* Dobstacle;
+	ZeroSprite* scoreTrigger;
+
+	bool isMove;
+
+	int score;
 
 	void Update(float eTime) override;
 	void Render() override;

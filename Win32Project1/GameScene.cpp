@@ -6,14 +6,19 @@
 #include <iostream>
 using namespace std;
 
-GameScene::GameScene() : spawnTimer(0, 2.f)
+GameScene::GameScene() : spawnTimer(0, 2.f), scoreTimer(0.f, 2.f) ,isSpawn(true), score(0), isScore(true)
 {
 	b = new Bird();
 	background = new ZeroSprite("Resource/Background/background.png");
+	scoreText = new ZeroFont(70, "");
+	
 	PushScene(b);
 	PushScene(background);
+	PushScene(scoreText);
 
+	b->SetScale(0.9);
 
+	scoreText->SetPos(250, 100);
 }
 
 
@@ -26,6 +31,7 @@ void GameScene::Update(float eTime)
 	ZeroIScene::Update(eTime);
 	background->Update(eTime);
 	b->Update(eTime);
+	scoreText->Update(eTime);
 
 	for (auto block : blockList) {
 		block->Update(eTime);
@@ -35,6 +41,8 @@ void GameScene::Update(float eTime)
 	IsCollision();
 	SpawnBlock(eTime);
 	CheckOut();
+	scoreText->SetString(to_string(score));
+	Scoring(eTime);
 }
 
 void GameScene::Render()
@@ -45,6 +53,7 @@ void GameScene::Render()
 	for (auto block : blockList) {
 		block->Render();
 	}
+	scoreText->Render();
 }
 
 void GameScene::IsCollision()
@@ -52,25 +61,31 @@ void GameScene::IsCollision()
 	for (auto block = blockList.begin(); block != blockList.end();) {
 		if (b->bird->IsOverlapped((*block)->Uobstacle) || b->bird->IsOverlapped((*block)->Dobstacle)) {
 			PopScene(b);
+			isSpawn = false;
+			for (auto iter : blockList)
+			{
+				iter->isMove = false;
+			}
+		
 			block++;
 			if (block == blockList.end()) break;
 		}
 		block++;
 		if (block == blockList.end()) break;
 	}
-
 }
 
 void GameScene::SpawnBlock(float eTime)
 {
 	spawnTimer.first += eTime;
 
-	if (spawnTimer.first >= spawnTimer.second) {
+	if (spawnTimer.first >= spawnTimer.second && isSpawn) {
 		Block* block = new Block();
 		
 		
 		block->Uobstacle->SetPos(600, Random(-300, 0));
 		block->Dobstacle->SetPos(600, block->Uobstacle->Pos().y + 700);
+		block->scoreTrigger->SetPos(600, block->Uobstacle->Pos().y + block->Uobstacle->Height());
 
 		blockList.push_back(block);
 		PushScene(block);		
@@ -88,4 +103,20 @@ void GameScene::CheckOut()
 		}
 		else block++;
 	}
+	
+
+}
+
+void GameScene::Scoring(float eTime)
+{
+	for (auto block = blockList.begin(); block != blockList.end();) {
+		if (b->bird->IsOverlapped((*block)->scoreTrigger)) {
+			score++;
+			block++;
+			if (block == blockList.end()) break;
+		}
+		block++;
+		if (block == blockList.end()) break;
+	}
+	
 }

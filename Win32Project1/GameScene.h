@@ -5,6 +5,7 @@
 
 #include "Bird.h"
 #include "Block.h"
+#include "Ground.h"
 
 #include <list>
 using namespace std;
@@ -18,6 +19,7 @@ public:
 	~GameScene();
 
 	Bird* b;
+	Ground* ground;
 	list<Block*> blockList;
 
 	pair<float, float> spawnTimer;
@@ -38,6 +40,6 @@ public:
 	void IsCollision();
 	void SpawnBlock(float eTime);
 	void CheckOut();
-	void Scoring(float eTime);
+	void Scoring();
 };
 

@@ -17,7 +17,7 @@
     <Filter Include="Object\Block">
       <UniqueIdentifier>{a85d0f36-c293-434d-9fd6-23f5d0a8f6a9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\NewFilter1">
+    <Filter Include="Object\Ground">
       <UniqueIdentifier>{d98b963d-4149-4850-bf99-dd9741e8b3c1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -36,6 +36,9 @@
     <ClCompile Include="TitleScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Ground.cpp">
+      <Filter>Object\Ground</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -52,5 +55,8 @@
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Global.h" />
+    <ClInclude Include="Ground.h">
+      <Filter>Object\Ground</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

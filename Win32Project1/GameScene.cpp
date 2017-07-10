@@ -6,7 +6,7 @@
 #include <iostream>
 using namespace std;
 
-GameScene::GameScene() : spawnTimer(0, 2.f), scoreTimer(0.f, 2.f) ,isSpawn(true), score(0), isScore(true)
+GameScene::GameScene() : spawnTimer(0, 2.f), scoreTimer(0.f, 2.f), isSpawn(true), score(0), isScore(true), playNum1(0), playNum2(0)
 {
 	b = new Bird();
 	ground = new Ground();
@@ -16,6 +16,10 @@ GameScene::GameScene() : spawnTimer(0, 2.f), scoreTimer(0.f, 2.f) ,isSpawn(true)
 	PushScene(b);
 	PushScene(background);
 	PushScene(scoreText);
+
+	ZeroSoundMgr->PushSound("Resource/Sound/sfx_hit.wav", "hitSound");
+	ZeroSoundMgr->PushSound("Resource/Sound/sfx_point.wav", "scoreSound");
+	ZeroSoundMgr->PushSound("Resource/Sound/sfx_die.wav", "deadSound");
 
 	b->SetScale(0.8);
 
@@ -31,8 +35,8 @@ void GameScene::Update(float eTime)
 {
 	ZeroIScene::Update(eTime);
 	background->Update(eTime);
-	b->Update(eTime);
 	ground->Update(eTime);
+	b->Update(eTime);
 	scoreText->Update(eTime);
 
 	for (auto block : blockList) {
@@ -50,11 +54,11 @@ void GameScene::Render()
 {
 	ZeroIScene::Render();
 	background->Render();
-	b->Render();
 	for (auto block : blockList) {
 		block->Render();
 	}
 	ground->Render();
+	b->Render();
 	scoreText->Render();
 }
 
@@ -62,7 +66,8 @@ void GameScene::IsCollision()
 {
 	for (auto block = blockList.begin(); block != blockList.end();) {
 		if (b->bird->IsOverlapped((*block)->Uobstacle) || b->bird->IsOverlapped((*block)->Dobstacle)) {
-			PopScene(b);
+			b->canFly = false;
+			PlayHitSound();
 			isSpawn = false;
 			for (auto iter : blockList)
 			{
@@ -79,11 +84,12 @@ void GameScene::IsCollision()
 
 	if (b->bird->IsOverlapped(ground->gSprite1) || b->bird->IsOverlapped(ground->gSprite2)) {
 		PopScene(b);
-		for (auto iter : blockList)
+		PlayDeadSound();
+		for (auto block : blockList)
 		{
-			iter->isMove = false;
-			ground->isMove = false;
+			block->isMove = false;
 		}
+		ground->isMove = false;
 	}
 }
 
@@ -123,6 +129,7 @@ void GameScene::Scoring()
 {
 	for (auto block = blockList.begin(); block != blockList.end();) {
 		if (b->bird->IsOverlapped((*block)->scoreTrigger)) {
+			ZeroSoundMgr->Play("scoreSound");
 			score++;
 			block++;
 			if (block == blockList.end()) break;
@@ -131,4 +138,20 @@ void GameScene::Scoring()
 		if (block == blockList.end()) break;
 	}
 	
+}
+
+void GameScene::PlayHitSound()
+{
+	if (playNum1 == 0) {
+		playNum1++;
+		ZeroSoundMgr->Play("hitSound");
+	}
+}
+
+void GameScene::PlayDeadSound()
+{
+	if (playNum2 == 0) {
+		playNum2++;
+		ZeroSoundMgr->Play("deadSound");
+	}
 }

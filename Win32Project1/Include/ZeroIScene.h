@@ -90,7 +90,7 @@ public:
 	//카메라 위치를 고려하여 m_vWorldPos값을 계산하고
 	//본 객체가 가지고있는 하위객체들의 Update()함수를 실행한다.
 	//그리고 m_bErase가 활성화되어있는 하위객체들 역시 제거한다.
-	void virtual Update(float _eTime);
+	virtual void Update(float _eTime);
 
 	//카메라 위치를 고려하여 m_vWorldPos값을 계산한다.
 	void UpdateWorldPos();

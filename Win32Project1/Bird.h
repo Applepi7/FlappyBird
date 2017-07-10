@@ -1,6 +1,7 @@
 #pragma once
 #include "ZeroIScene.h"
 #include "ZeroAnimation.h"
+#include "ZeroSoundManager.h"
 
 
 class Bird :
@@ -18,6 +19,8 @@ public:
 
 	ZeroAnimation* bird;
 	
+	bool canFly;
+
 	void Update(float eTime) override;
 	void Render() override;
 	void Fly(float eTime);

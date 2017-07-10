@@ -1,6 +1,7 @@
 #pragma once
 #include "ZeroIScene.h"
 #include "ZeroSprite.h"
+#include "ZeroSoundManager.h"
 #include "ZeroFont.h"
 
 #include "Bird.h"
@@ -29,6 +30,8 @@ public:
 	ZeroFont* scoreText;
 
 	int score;
+	int playNum1;
+	int playNum2;
 
 	bool isPlay;
 	bool isSpawn;
@@ -41,5 +44,7 @@ public:
 	void SpawnBlock(float eTime);
 	void CheckOut();
 	void Scoring();
+	void PlayHitSound();
+	void PlayDeadSound();
 };
 

@@ -4,7 +4,7 @@
 #include "ZeroInputManager.h"
 
 
-Bird::Bird() : moveY(0), jumpPower(400), floorY(0), gravity(400)
+Bird::Bird() : moveY(0), jumpPower(400), floorY(0), gravity(400), canFly(true)
 {
 	bird = new ZeroAnimation(1.f);
 	for (int i = 1; i <= 3; i++) {
@@ -12,6 +12,8 @@ Bird::Bird() : moveY(0), jumpPower(400), floorY(0), gravity(400)
 	}
 	PushScene(bird);
 	
+	ZeroSoundMgr->PushSound("Resource/Sound/sfx_wing.wav", "flySound");
+
 	SetPos(100, 200);
 }
 
@@ -42,11 +44,13 @@ void Bird::Render()
 
 void Bird::Fly(float eTime)
 {
-	if (ZeroInputMgr->GetKey(VK_SPACE) == INPUTMGR_KEYDOWN)
-	{
-		moveY = -jumpPower;
-		floorY = Pos().y - 100;
+	if (Pos().y > 10 && canFly) {
+		if (ZeroInputMgr->GetKey(VK_SPACE) == INPUTMGR_KEYDOWN)
+		{
+			moveY = -jumpPower;
+			floorY = Pos().y - 100;
+			ZeroSoundMgr->Play("flySound");
+		}
 	}
-	
 }
 

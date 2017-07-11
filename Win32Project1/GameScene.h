@@ -28,6 +28,7 @@ public:
 
 	ZeroSprite* background;
 	ZeroFont* scoreText;
+	ZeroFont* continueText;
 
 	int score;
 	int playNum1;
@@ -36,6 +37,7 @@ public:
 	bool isPlay;
 	bool isSpawn;
 	bool isScore;
+	bool isAlive;
 
 	void Update(float eTime) override;
 	void Render() override;
@@ -46,5 +48,6 @@ public:
 	void Scoring();
 	void PlayHitSound();
 	void PlayDeadSound();
+	void ReStart();
 };
 

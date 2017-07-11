@@ -1,17 +1,21 @@
 #include "stdafx.h"
 #include "GameScene.h"
 
+#include "ZeroSceneManager.h"
+#include "ZeroInputManager.h"
+
 #include "Global.h"
 
 #include <iostream>
 using namespace std;
 
-GameScene::GameScene() : spawnTimer(0, 2.f), scoreTimer(0.f, 2.f), isSpawn(true), score(0), isScore(true), playNum1(0), playNum2(0)
+GameScene::GameScene() : spawnTimer(0, 2.f), scoreTimer(0.f, 2.f), isSpawn(true), isScore(true), isAlive(true), score(0), playNum1(0), playNum2(0)
 {
 	b = new Bird();
 	ground = new Ground();
 	background = new ZeroSprite("Resource/Background/background.png");
 	scoreText = new ZeroFont(70, "");
+	continueText = new ZeroFont(70, "");
 	
 	PushScene(b);
 	PushScene(background);
@@ -36,8 +40,11 @@ void GameScene::Update(float eTime)
 	ZeroIScene::Update(eTime);
 	background->Update(eTime);
 	ground->Update(eTime);
-	b->Update(eTime);
+	if (isAlive) {
+		b->Update(eTime);
+	}
 	scoreText->Update(eTime);
+	continueText->Update(eTime);
 
 	for (auto block : blockList) {
 		block->Update(eTime);
@@ -58,8 +65,11 @@ void GameScene::Render()
 		block->Render();
 	}
 	ground->Render();
-	b->Render();
+	if (isAlive) {
+		b->Render();
+	}
 	scoreText->Render();
+	continueText->Render();
 }
 
 void GameScene::IsCollision()
@@ -85,10 +95,12 @@ void GameScene::IsCollision()
 	if (b->bird->IsOverlapped(ground->gSprite1) || b->bird->IsOverlapped(ground->gSprite2)) {
 		PopScene(b);
 		PlayDeadSound();
+		ReStart();
 		for (auto block : blockList)
 		{
 			block->isMove = false;
 		}
+		isAlive = false;
 		ground->isMove = false;
 	}
 }
@@ -153,5 +165,18 @@ void GameScene::PlayDeadSound()
 	if (playNum2 == 0) {
 		playNum2++;
 		ZeroSoundMgr->Play("deadSound");
+	}
+}
+
+void GameScene::ReStart()
+{
+
+	continueText = new ZeroFont(40, "Press Enter To Restart");
+	PushScene(continueText);
+
+	continueText->SetPos(150, 350);
+
+	if (ZeroInputMgr->GetKey(VK_RETURN) == INPUTMGR_KEYDOWN) {
+		ZeroSceneMgr->ChangeScene(new GameScene());
 	}
 }

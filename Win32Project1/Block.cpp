@@ -3,7 +3,7 @@
 
 #include "Global.h"
 
-Block::Block() : isMove(true), score(0)
+Block::Block() : isMove(true), score(0), updown(1), movingTimer(0, 0.5)
 {
 	Dobstacle = new ZeroSprite("Resource/Block/Dobstacle.png");
 	Uobstacle = new ZeroSprite("Resource/Block/Uobstacle.png");
@@ -11,7 +11,6 @@ Block::Block() : isMove(true), score(0)
 	PushScene(Dobstacle);
 	PushScene(Uobstacle);
 	PushScene(scoreTrigger);
-	
 }
 
 
@@ -26,6 +25,9 @@ void Block::Update(float eTime)
 	Dobstacle->Update(eTime);
 	scoreTrigger->Update(eTime);
 	MoveX(eTime);
+
+	//Moving(eTime);
+
 }
 
 void Block::Render()
@@ -41,3 +43,16 @@ void Block::MoveX(float eTime)
 	if(isMove)
 		AddPosX(-110 * eTime);
 }
+
+void Block::Moving(float eTime)
+{
+	Uobstacle->AddPosY(200 * eTime * updown);
+	movingTimer.first += eTime;
+	if (movingTimer.first <= movingTimer.second) {
+		updown = -updown;
+	}
+
+}
+
+
+

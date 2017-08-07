@@ -14,6 +14,7 @@ GameScene::GameScene() : spawnTimer(0, 2.f), scoreTimer(0.f, 2.f), isSpawn(true)
 	b = new Bird();
 	ground = new Ground();
 	background = new ZeroSprite("Resource/Background/background.png");
+	gameoverText = new ZeroSprite("Resource/Text/gameover.png");
 	scoreText = new ZeroFont(70, "");
 	continueText = new ZeroFont(70, "");
 	
@@ -24,6 +25,7 @@ GameScene::GameScene() : spawnTimer(0, 2.f), scoreTimer(0.f, 2.f), isSpawn(true)
 	ZeroSoundMgr->PushSound("Resource/Sound/sfx_hit.wav", "hitSound");
 	ZeroSoundMgr->PushSound("Resource/Sound/sfx_point.wav", "scoreSound");
 	ZeroSoundMgr->PushSound("Resource/Sound/sfx_die.wav", "deadSound");
+
 
 	b->SetScale(0.8);
 
@@ -44,6 +46,7 @@ void GameScene::Update(float eTime)
 		b->Update(eTime);
 	}
 	scoreText->Update(eTime);
+	gameoverText->Update(eTime);
 	continueText->Update(eTime);
 
 	for (auto block : blockList) {
@@ -69,7 +72,10 @@ void GameScene::Render()
 		b->Render();
 	}
 	scoreText->Render();
+	
 	continueText->Render();
+	if (!isAlive)
+		gameoverText->Render();
 }
 
 void GameScene::IsCollision()
@@ -102,25 +108,30 @@ void GameScene::IsCollision()
 		}
 		isAlive = false;
 		ground->isMove = false;
+
+		PushScene(gameoverText);
+		gameoverText->SetPos(100, 300);
 	}
 }
 
 void GameScene::SpawnBlock(float eTime)
 {
-	spawnTimer.first += eTime;
+	if (isAlive) {
+		spawnTimer.first += eTime;
 
-	if (spawnTimer.first >= spawnTimer.second && isSpawn) {
-		Block* block = new Block();
-		
-		
-		block->Uobstacle->SetPos(600, Random(-300, -170));
-		block->Dobstacle->SetPos(600, block->Uobstacle->Pos().y + 700);
-		block->scoreTrigger->SetPos(600, block->Uobstacle->Pos().y + block->Uobstacle->Height());
+		if (spawnTimer.first >= spawnTimer.second && isSpawn) {
+			Block* block = new Block();
 
-		blockList.push_back(block);
-		PushScene(block);		
 
-		spawnTimer.first = 0;
+			block->Uobstacle->SetPos(600, Random(-300, -170));
+			block->Dobstacle->SetPos(600, block->Uobstacle->Pos().y + 700);
+			block->scoreTrigger->SetPos(600, block->Uobstacle->Pos().y + block->Uobstacle->Height());
+
+			blockList.push_back(block);
+			PushScene(block);
+
+			spawnTimer.first = 0;
+		}
 	}
 }
 
@@ -170,11 +181,10 @@ void GameScene::PlayDeadSound()
 
 void GameScene::ReStart()
 {
-
 	continueText = new ZeroFont(40, "Press Enter To Restart");
 	PushScene(continueText);
-
-	continueText->SetPos(150, 350);
+	
+	continueText->SetPos(150, 450);
 
 	if (ZeroInputMgr->GetKey(VK_RETURN) == INPUTMGR_KEYDOWN) {
 		ZeroSceneMgr->ChangeScene(new GameScene());

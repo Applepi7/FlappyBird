@@ -27,6 +27,7 @@ public:
 	pair<float, float> scoreTimer;
 
 	ZeroSprite* background;
+	ZeroSprite* gameoverText;
 	ZeroFont* scoreText;
 	ZeroFont* continueText;
 

@@ -11,13 +11,14 @@ TitleScene::TitleScene()
 	titleText = new ZeroSprite("Resource/Text/title.png");
 	background = new ZeroSprite("Resource/Background/background.png");
 	enterText = new ZeroFont(40, "Press Enter to Start");
+	//, "04B_19_" ,"Resource/Font/04B_19_.TTF"
 
 	PushScene(titleText);
 	PushScene(background);
 	PushScene(enterText);
 
 	titleText->SetPos(180, 100);
-	enterText->SetPos(170, 600);
+	enterText->SetPos(165, 575);
 }
 
 

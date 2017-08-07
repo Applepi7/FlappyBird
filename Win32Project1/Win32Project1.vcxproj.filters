@@ -20,6 +20,12 @@
     <Filter Include="Object\Ground">
       <UniqueIdentifier>{d98b963d-4149-4850-bf99-dd9741e8b3c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scenes\GameScene">
+      <UniqueIdentifier>{6b53cf06-c6d8-4555-9c12-7166ea84d5c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes\TitleScene">
+      <UniqueIdentifier>{c36d3593-906c-4d0f-a059-2456aaaab5bb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -27,17 +33,17 @@
     <ClCompile Include="Bird.cpp">
       <Filter>Object\Player</Filter>
     </ClCompile>
-    <ClCompile Include="GameScene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="Block.cpp">
       <Filter>Object\Block</Filter>
     </ClCompile>
-    <ClCompile Include="TitleScene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="Ground.cpp">
       <Filter>Object\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>Scenes\GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>Scenes\TitleScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -45,18 +51,18 @@
     <ClInclude Include="Bird.h">
       <Filter>Object\Player</Filter>
     </ClInclude>
-    <ClInclude Include="GameScene.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="Block.h">
       <Filter>Object\Block</Filter>
-    </ClInclude>
-    <ClInclude Include="TitleScene.h">
-      <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Global.h" />
     <ClInclude Include="Ground.h">
       <Filter>Object\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>Scenes\GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>Scenes\TitleScene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

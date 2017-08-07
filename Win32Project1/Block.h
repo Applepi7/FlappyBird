@@ -17,10 +17,14 @@ public:
 	bool isMove;
 
 	int score;
+	int updown;
+
+	pair<float, float> movingTimer;
 
 	void Update(float eTime) override;
 	void Render() override;
 
 	void MoveX(float eTime);
+	void Moving(float eTime);
 };
 
